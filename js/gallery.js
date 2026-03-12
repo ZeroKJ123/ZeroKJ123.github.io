@@ -129,7 +129,7 @@
 
         var badge = document.createElement('span');
         badge.className = 'gallery-item__badge';
-        badge.textContent = '🐵 Monkey Meme';
+        badge.textContent = '🐵 Музей бибизян';
 
         overlay.appendChild(counter);
         overlay.appendChild(badge);
@@ -443,7 +443,7 @@
         // Пытаемся использовать Web Share API
         if (navigator.share) {
             navigator.share({
-                title: 'Monkey Meme Museum 🐵',
+                title: 'Музей бибизян 🐵',
                 text: 'Смотри какой мем с обезьяной! 😂',
                 url: fullUrl
             }).catch(function () {
