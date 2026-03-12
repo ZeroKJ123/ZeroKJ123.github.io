@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Бесконечная галерея мемов про обезьян в стиле TikTok. Листай вверх и смейся!">
+    <meta name="theme-color" content="#000000">
+    <title>😂 Смешные картинки — Monkey Meme Museum</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Дополнительные стили специфичные для галереи -->
+    <style>
+        /*
+         * Переопределяем фон body для галереи —
+         * чёрный фон, как в TikTok
+         */
+        body {
+            background-color: #000;
+        }
+
+        /*
+         * Скрываем скроллбар полностью на этой странице
+         */
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        /*
+         * Полноэкранное фото при клике
+         */
+        .gallery-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2000;
+            background: rgba(0, 0, 0, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            cursor: zoom-out;
+        }
+
+        .gallery-fullscreen--open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .gallery-fullscreen__img {
+            max-width: 95vw;
+            max-height: 95vh;
+            object-fit: contain;
+            border-radius: 8px;
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .gallery-fullscreen--open .gallery-fullscreen__img {
+            transform: scale(1);
+        }
+
+        .gallery-fullscreen__close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 1.4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 2001;
+        }
+
+        .gallery-fullscreen__close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        /*
+         * Навигационные подсказки по бокам
+         */
+        .gallery-nav-hint {
+            position: absolute;
+            left: 16px;
+            bottom: 120px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .gallery-nav-hint__item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.5);
+            letter-spacing: 0.03em;
+        }
+
+        .gallery-nav-hint__key {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 28px;
+            height: 24px;
+            padding: 0 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-family: var(--font-mono);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .gallery-nav-hint {
+                display: none;
+            }
+
+            .gallery-fullscreen__close {
+                top: 12px;
+                right: 12px;
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-sidebar {
+                gap: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ============================================
+     HEADER
+     ============================================ -->
+<header class="header" role="banner">
+    <div class="header__inner">
+
+        <!-- Логотип -->
+        <a href="index.html" class="header__logo" aria-label="Monkey Meme Museum — на главную">
+            <span class="header__logo-emoji" aria-hidden="true">🐵</span>
+            <span class="header__logo-text">MonkeyMemes</span>
+        </a>
+
+        <!-- Десктоп навигация -->
+        <nav class="nav" role="navigation" aria-label="Основная навигация">
+            <ul class="nav__list">
+                <li>
+                    <a href="index.html" class="nav__link">
+                        <span class="nav__link-emoji" aria-hidden="true">🏠</span>
+                        Главная
+                    </a>
+                </li>
+                <li>
+                    <a href="gallery.html" class="nav__link nav__link--active">
+                        <span class="nav__link-emoji" aria-hidden="true">😂</span>
+                        Смешные картинки
+                    </a>
+                </li>
+                <li>
+                    <a href="about.html" class="nav__link">
+                        <span class="nav__link-emoji" aria-hidden="true">📖</span>
+                        О проекте
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Бургер кнопка (мобильная) -->
+        <button class="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-nav">
+            <span class="burger__line"></span>
+            <span class="burger__line"></span>
+            <span class="burger__line"></span>
+        </button>
+    </div>
+</header>
+
+<!-- Мобильная навигация -->
+<div class="mobile-nav" id="mobile-nav" aria-hidden="true" role="dialog" aria-label="Мобильное меню">
+    <nav>
+        <ul class="mobile-nav__list">
+            <li>
+                <a href="index.html" class="mobile-nav__link">
+                    <span class="mobile-nav__link-emoji" aria-hidden="true">🏠</span>
+                    Главная
+                </a>
+            </li>
+            <li>
+                <a href="gallery.html" class="mobile-nav__link mobile-nav__link--active">
+                    <span class="mobile-nav__link-emoji" aria-hidden="true">😂</span>
+                    Смешные картинки
+                </a>
+            </li>
+            <li>
+                <a href="about.html" class="mobile-nav__link">
+                    <span class="mobile-nav__link-emoji" aria-hidden="true">📖</span>
+                    О проекте
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!-- ============================================
+     GALLERY — TIKTOK STYLE
+     ============================================ -->
+<main class="gallery-page" role="main" aria-label="Галерея мемов">
+
+    <!-- Прогресс-точки сверху -->
+    <div class="gallery-progress" role="tablist" aria-label="Прогресс просмотра">
+        <!-- Создаются динамически через JS -->
+    </div>
+
+    <!-- Лента мемов (scroll-snap контейнер) -->
+    <div class="gallery-feed" role="feed" aria-label="Лента мемов с обезьянами">
+        <!-- Элементы создаются динамически через JS -->
+    </div>
+
+    <!-- Подсказка скролла -->
+    <div class="gallery-hint" aria-hidden="true">
+        <span class="gallery-hint__icon">👆</span>
+        <span class="gallery-hint__text">Листай вверх</span>
+    </div>
+
+    <!-- Боковая панель действий (как в TikTok) -->
+    <div class="gallery-sidebar" aria-label="Действия">
+
+        <!-- Лайк -->
+        <button class="gallery-sidebar__btn" data-action="like" aria-label="Нравится">
+            <span class="gallery-sidebar__icon">🤍</span>
+            <span class="gallery-sidebar__label">Нравится</span>
+        </button>
+
+        <!-- Поделиться -->
+        <button class="gallery-sidebar__btn" data-action="share" aria-label="Поделиться">
+            <span class="gallery-sidebar__icon">📤</span>
+            <span class="gallery-sidebar__label">Поделиться</span>
+        </button>
+
+        <!-- Счётчик -->
+        <div class="gallery-sidebar__btn" aria-label="Номер мема">
+            <span class="gallery-sidebar__icon gallery-sidebar__counter">1/0</span>
+            <span class="gallery-sidebar__label">Номер</span>
+        </div>
+
+        <!-- Полный экран -->
+        <button class="gallery-sidebar__btn" data-action="fullscreen" aria-label="На весь экран">
+            <span class="gallery-sidebar__icon">🔍</span>
+            <span class="gallery-sidebar__label">Увеличить</span>
+        </button>
+    </div>
+
+    <!-- Подсказки клавиатурной навигации (десктоп) -->
+    <div class="gallery-nav-hint" aria-hidden="true">
+        <div class="gallery-nav-hint__item">
+            <span class="gallery-nav-hint__key">↑</span>
+            <span>Предыдущий</span>
+        </div>
+        <div class="gallery-nav-hint__item">
+            <span class="gallery-nav-hint__key">↓</span>
+            <span>Следующий</span>
+        </div>
+        <div class="gallery-nav-hint__item">
+            <span class="gallery-nav-hint__key">L</span>
+            <span>Лайк</span>
+        </div>
+    </div>
+</main>
+
+<!-- Полноэкранный просмотр -->
+<div class="gallery-fullscreen" id="gallery-fullscreen" aria-hidden="true" role="dialog" aria-label="Полноэкранный просмотр">
+    <button class="gallery-fullscreen__close" aria-label="Закрыть">✕</button>
+    <img class="gallery-fullscreen__img" src="" alt="Мем в полном размере">
+</div>
+
+<!-- ============================================
+     SCRIPTS
+     ============================================ -->
+<script src="js/images.js"></script>
+<script src="js/common.js"></script>
+<script src="js/gallery.js"></script>
+
+<!-- Инлайн-скрипт для fullscreen функционала -->
+<script>
+    (function () {
+        'use strict';
+
+        var fullscreenOverlay = document.getElementById('gallery-fullscreen');
+        var fullscreenImg = fullscreenOverlay ? fullscreenOverlay.querySelector('.gallery-fullscreen__img') : null;
+        var fullscreenClose = fullscreenOverlay ? fullscreenOverlay.querySelector('.gallery-fullscreen__close') : null;
+        var feed = document.querySelector('.gallery-feed');
+        var sidebar = document.querySelector('.gallery-sidebar');
+        var fullscreenBtn = sidebar ? sidebar.querySelector('[data-action="fullscreen"]') : null;
+
+        /**
+         * Открывает полноэкранный просмотр текущего мема
+         */
+        function openFullscreen() {
+            if (!fullscreenOverlay || !fullscreenImg || !feed) return;
+
+            // Находим текущий видимый элемент
+            var items = feed.querySelectorAll('.gallery-item');
+            if (items.length === 0) return;
+
+            var feedRect = feed.getBoundingClientRect();
+            var centerY = feedRect.top + feedRect.height / 2;
+            var closest = null;
+            var closestDist = Infinity;
+
+            items.forEach(function (item) {
+                var rect = item.getBoundingClientRect();
+                var itemCenter = rect.top + rect.height / 2;
+                var dist = Math.abs(itemCenter - centerY);
+                if (dist < closestDist) {
+                    closestDist = dist;
+                    closest = item;
+                }
+            });
+
+            if (!closest) return;
+
+            var imgSrc = closest.dataset.imagePath;
+            if (!imgSrc) return;
+
+            fullscreenImg.src = imgSrc;
+            fullscreenImg.alt = closest.querySelector('img').alt || 'Мем';
+
+            fullscreenOverlay.classList.add('gallery-fullscreen--open');
+            fullscreenOverlay.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('no-scroll');
+        }
+
+        /**
+         * Закрывает полноэкранный просмотр
+         */
+        function closeFullscreen() {
+            if (!fullscreenOverlay) return;
+
+            fullscreenOverlay.classList.remove('gallery-fullscreen--open');
+            fullscreenOverlay.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('no-scroll');
+        }
+
+        // Кнопка "Увеличить" в сайдбаре
+        if (fullscreenBtn) {
+            fullscreenBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                openFullscreen();
+            });
+        }
+
+        // Кнопка закрытия
+        if (fullscreenClose) {
+            fullscreenClose.addEventListener('click', function (e) {
+                e.stopPropagation();
+                closeFullscreen();
+            });
+        }
+
+        // Клик по оверлею — закрыть
+        if (fullscreenOverlay) {
+            fullscreenOverlay.addEventListener('click', function (e) {
+                if (e.target === fullscreenOverlay) {
+                    closeFullscreen();
+                }
+            });
+        }
+
+        // Escape — закрыть
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' && fullscreenOverlay && fullscreenOverlay.classList.contains('gallery-fullscreen--open')) {
+                closeFullscreen();
+            }
+        });
+
+        // Открытие по клику на изображение в ленте
+        if (feed) {
+            feed.addEventListener('click', function (e) {
+                var img = e.target.closest('.gallery-item__image');
+                if (img) {
+                    openFullscreen();
+                }
+            });
+        }
+
+    })();
+</script>
+
+</body>
+</html>

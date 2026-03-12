@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Monkey Meme Museum — первый в мире виртуальный музей мемов про обезьян. Смешные картинки, интересные факты и бесконечная галерея мемов.">
+    <meta name="theme-color" content="#0f0f0f">
+    <title>🐵 Monkey Meme Museum — Главная</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============================================
+     HEADER
+     ============================================ -->
+<header class="header" role="banner">
+    <div class="header__inner">
+
+        <!-- Логотип -->
+        <a href="index.html" class="header__logo" aria-label="Monkey Meme Museum — на главную">
+            <span class="header__logo-emoji" aria-hidden="true">🐵</span>
+            <span class="header__logo-text">MonkeyMemes</span>
+        </a>
+
+        <!-- Десктоп навигация -->
+        <nav class="nav" role="navigation" aria-label="Основная навигация">
+            <ul class="nav__list">
+                <li>
+                    <a href="index.html" class="nav__link nav__link--active">
+                        <span class="nav__link-emoji" aria-hidden="true">🏠</span>
+                        Главная
+                    </a>
+                </li>
+                <li>
+                    <a href="gallery.html" class="nav__link">
+                        <span class="nav__link-emoji" aria-hidden="true">😂</span>
+                        Смешные картинки
+                    </a>
+                </li>
+                <li>
+                    <a href="about.html" class="nav__link">
+                        <span class="nav__link-emoji" aria-hidden="true">📖</span>
+                        О проекте
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Бургер кнопка (мобильная) -->
+        <button class="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-nav">
+            <span class="burger__line"></span>
+            <span class="burger__line"></span>
+            <span class="burger__line"></span>
+        </button>
+    </div>
+</header>
+
+<!-- Мобильная навигация -->
+<div class="mobile-nav" id="mobile-nav" aria-hidden="true" role="dialog" aria-label="Мобильное меню">
+    <nav>
+        <ul class="mobile-nav__list">
+            <li>
+                <a href="index.html" class="mobile-nav__link mobile-nav__link--active">
+                    <span class="mobile-nav__link-emoji" aria-hidden="true">🏠</span>
+                    Главная
+                </a>
+            </li>
+            <li>
+                <a href="gallery.html" class="mobile-nav__link">
+                    <span class="mobile-nav__link-emoji" aria-hidden="true">😂</span>
+                    Смешные картинки
+                </a>
+            </li>
+            <li>
+                <a href="about.html" class="mobile-nav__link">
+                    <span class="mobile-nav__link-emoji" aria-hidden="true">📖</span>
+                    О проекте
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!-- ============================================
+     MAIN CONTENT
+     ============================================ -->
+<main class="page-wrapper">
+
+    <!-- ========== HERO SLIDER ========== -->
+    <section class="hero" aria-label="Слайдер с мемами">
+        <div class="slider">
+
+            <!-- Слайды создаются динамически через JS -->
+            <div class="slider__track" role="tablist" aria-label="Слайды">
+            </div>
+
+            <!-- Оверлей -->
+            <div class="slider__overlay" aria-hidden="true"></div>
+
+            <!-- Контент поверх слайдера -->
+            <div class="slider__content">
+                <h1 class="slider__title">
+                    <span class="emoji-title" aria-hidden="true">🐒</span>
+                    <span class="text-gradient">Monkey Meme</span> Museum
+                </h1>
+                <p class="slider__description">
+                    Первый в мире виртуальный музей мемов про обезьян.
+                    Тысячи смешных картинок ждут тебя!
+                </p>
+            </div>
+
+            <!-- Стрелки навигации -->
+            <button class="slider__arrow slider__arrow--prev" aria-label="Предыдущий слайд">
+                ‹
+            </button>
+            <button class="slider__arrow slider__arrow--next" aria-label="Следующий слайд">
+                ›
+            </button>
+
+            <!-- Точки навигации -->
+            <div class="slider__dots" role="tablist" aria-label="Навигация по слайдам">
+                <!-- Создаются динамически через JS -->
+            </div>
+
+            <!-- Прогресс-бар -->
+            <div class="slider__progress" role="progressbar" aria-label="Прогресс слайда"></div>
+        </div>
+    </section>
+
+    <!-- ========== INTRO SECTION ========== -->
+    <section class="intro" aria-labelledby="intro-heading">
+        <div class="container">
+            <div class="intro__grid">
+
+                <!-- Текстовый блок -->
+                <div class="intro__text animate-on-scroll">
+                    <h2 id="intro-heading">
+                        <span class="text-gradient">Добро пожаловать</span> в музей 🎉
+                    </h2>
+                    <p>
+                        <strong>Monkey Meme Museum</strong> — это уникальное пространство,
+                        посвящённое самым смешным, абсурдным и трогательным мемам с обезьянами
+                        со всего интернета.
+                    </p>
+                    <p>
+                        Здесь собраны лучшие произведения мем-искусства, от классических
+                        «monkey looking away» до современных шедевров с гориллами и шимпанзе.
+                        Каждый мем — это маленькая история, рассказанная языком приматов.
+                    </p>
+                    <p>
+                        Наш музей работает 24/7, вход бесплатный, а коллекция постоянно
+                        пополняется. Листай, смейся и делись с друзьями!
+                    </p>
+                    <div class="mt-3">
+                        <a href="gallery.html" class="btn btn--primary">
+                            <span aria-hidden="true">😂</span>
+                            Смотреть мемы
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Изображение -->
+                <div class="intro__image-wrapper animate-on-scroll" id="intro-image">
+                    <img src="" alt="Мем с обезьяной — экспонат музея" id="intro-img">
+                    <span class="intro__badge" aria-hidden="true">⭐ Экспонат дня</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== STATS SECTION ========== -->
+    <section class="stats" aria-labelledby="stats-heading">
+        <div class="container">
+            <h2 id="stats-heading" class="sr-only">Статистика музея</h2>
+            <div class="stats__grid">
+
+                <div class="stat-card animate-on-scroll">
+                    <span class="stat-card__emoji" aria-hidden="true">🖼️</span>
+                    <div class="stat-card__number" id="stat-memes">0</div>
+                    <div class="stat-card__label">Мемов в коллекции</div>
+                </div>
+
+                <div class="stat-card animate-on-scroll">
+                    <span class="stat-card__emoji" aria-hidden="true">🐵</span>
+                    <div class="stat-card__number">12+</div>
+                    <div class="stat-card__label">Видов обезьян</div>
+                </div>
+
+                <div class="stat-card animate-on-scroll">
+                    <span class="stat-card__emoji" aria-hidden="true">😂</span>
+                    <div class="stat-card__number">∞</div>
+                    <div class="stat-card__label">Минут смеха</div>
+                </div>
+
+                <div class="stat-card animate-on-scroll">
+                    <span class="stat-card__emoji" aria-hidden="true">🌍</span>
+                    <div class="stat-card__number">24/7</div>
+                    <div class="stat-card__label">Режим работы</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FUN FACTS SECTION ========== -->
+    <section class="facts" aria-labelledby="facts-heading">
+        <div class="container">
+
+            <div class="facts__header animate-on-scroll">
+                <h2 id="facts-heading">
+                    <span class="text-gradient-fun">Интересные факты</span> об обезьянах
+                    <span aria-hidden="true">🧠</span>
+                </h2>
+                <p class="section-subtitle">
+                    Узнай больше о наших ближайших родственниках в животном мире
+                </p>
+            </div>
+
+            <div class="facts__grid">
+
+                <article class="fact-card animate-on-scroll">
+                    <span class="fact-card__emoji" aria-hidden="true">🧬</span>
+                    <h3 class="fact-card__title">98.7% общей ДНК</h3>
+                    <p class="fact-card__text">
+                        ДНК шимпанзе и человека совпадает на 98.7%. Мы буквально
+                        кузены! Неудивительно, что мемы с обезьянами так
+                        понятны каждому.
+                    </p>
+                </article>
+
+                <article class="fact-card animate-on-scroll">
+                    <span class="fact-card__emoji" aria-hidden="true">🤣</span>
+                    <h3 class="fact-card__title">Обезьяны умеют смеяться</h3>
+                    <p class="fact-card__text">
+                        Шимпанзе и гориллы действительно смеются, когда их щекочут!
+                        Их смех похож на человеческий — тяжёлое дыхание
+                        с вокализацией.
+                    </p>
+                </article>
+
+                <article class="fact-card animate-on-scroll">
+                    <span class="fact-card__emoji" aria-hidden="true">🛠️</span>
+                    <h3 class="fact-card__title">Используют инструменты</h3>
+                    <p class="fact-card__text">
+                        Капуцины используют камни для раскалывания орехов,
+                        а шимпанзе делают «удочки» из веток для ловли
+                        термитов. Настоящие инженеры!
+                    </p>
+                </article>
+
+                <article class="fact-card animate-on-scroll">
+                    <span class="fact-card__emoji" aria-hidden="true">🪞</span>
+                    <h3 class="fact-card__title">Узнают себя в зеркале</h3>
+                    <p class="fact-card__text">
+                        Человекообразные обезьяны — одни из немногих животных,
+                        которые проходят «зеркальный тест» и узнают своё
+                        отражение.
+                    </p>
+                </article>
+
+                <article class="fact-card animate-on-scroll">
+                    <span class="fact-card__emoji" aria-hidden="true">🗣️</span>
+                    <h3 class="fact-card__title">Язык жестов</h3>
+                    <p class="fact-card__text">
+                        Горилла Коко выучила более 1000 жестов на языке глухонемых
+                        и понимала около 2000 слов на английском.
+                        Гений среди приматов!
+                    </p>
+                </article>
+
+                <article class="fact-card animate-on-scroll">
+                    <span class="fact-card__emoji" aria-hidden="true">👑</span>
+                    <h3 class="fact-card__title">260+ видов</h3>
+                    <p class="fact-card__text">
+                        В мире существует более 260 видов обезьян!
+                        От крошечного карликового мармозетки (14 см) до
+                        могучей гориллы (180 см). Каждый достоин мема!
+                    </p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CTA SECTION ========== -->
+    <section class="cta" aria-labelledby="cta-heading">
+        <div class="container">
+            <div class="animate-on-scroll">
+                <h2 id="cta-heading">
+                    Готов к
+                    <span class="text-gradient">бесконечному</span>
+                    веселью?
+                    <span aria-hidden="true">🎭</span>
+                </h2>
+                <p>
+                    Открой нашу TikTok-галерею и листай мемы с обезьянами
+                    бесконечно. Серьёзно, они никогда не закончатся!
+                </p>
+                <div class="btn-group">
+                    <a href="gallery.html" class="btn btn--primary">
+                        <span aria-hidden="true">🚀</span>
+                        Открыть галерею
+                    </a>
+                    <a href="about.html" class="btn btn--outline">
+                        <span aria-hidden="true">📖</span>
+                        О проекте
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer class="footer" role="contentinfo">
+    <div class="container">
+        <p class="footer__text">
+            <span aria-hidden="true">🐵</span>
+            Monkey Meme Museum © 2024 — Сделано с
+            <span class="footer__heart" aria-label="любовью">❤️</span>
+            к обезьянам и мемам
+        </p>
+        <p class="footer__text mt-1">
+            Проект
+            <a href="about.html" class="footer__link">Сидролёвой Софии</a>
+        </p>
+    </div>
+</footer>
+
+<!-- ============================================
+     SCRIPTS
+     ============================================ -->
+<script src="js/images.js"></script>
+<script src="js/common.js"></script>
+<script src="js/slider.js"></script>
+
+<!-- Инлайн-скрипт для динамического контента -->
+<script>
+    (function () {
+        'use strict';
+
+        // Устанавливаем картинку в intro секцию
+        var introImg = document.getElementById('intro-img');
+        if (introImg) {
+            var paths = getAllImagePaths();
+            if (paths.length > 0) {
+                // Берём вторую картинку (первая уже в слайдере)
+                var idx = paths.length > 1 ? 1 : 0;
+                introImg.src = paths[idx];
+            }
+        }
+
+        // Устанавливаем реальное кол-во мемов в статистику
+        var statMemes = document.getElementById('stat-memes');
+        if (statMemes) {
+            var count = getImageCount();
+            statMemes.textContent = count + '+';
+
+            // Анимация счётчика
+            animateCounter(statMemes, 0, count, 1500);
+        }
+
+        /**
+         * Анимация числового счётчика
+         */
+        function animateCounter(element, start, end, duration) {
+            var startTime = null;
+
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                var progress = Math.min((timestamp - startTime) / duration, 1);
+
+                // Easing — ease-out
+                var eased = 1 - Math.pow(1 - progress, 3);
+                var current = Math.floor(start + (end - start) * eased);
+
+                element.textContent = current + '+';
+
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            }
+
+            // Запускаем только когда элемент виден
+            var observer = new IntersectionObserver(function (entries) {
+                if (entries[0].isIntersecting) {
+                    requestAnimationFrame(step);
+                    observer.disconnect();
+                }
+            }, { threshold: 0.5 });
+
+            observer.observe(element);
+        }
+    })();
+</script>
+
+</body>
+</html>
