@@ -2,152 +2,326 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Бесконечная галерея мемов про обезьян в стиле TikTok. Листай вверх и смейся!">
-    <meta name="theme-color" content="#000000">
-    <title>😂 Смешные картинки — Музей бибизян</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Залы по студиям — МузМульт. Киевнаучфильм, Союзмультфильм, ТО «Экран». Экспонаты советской анимации.">
+    <meta name="theme-color" content="#0f0f0f">
+    <title>Залы по студиям — МузМульт</title>
     <link rel="stylesheet" href="css/style.css">
-
-    <!-- Дополнительные стили специфичные для галереи -->
     <style>
-        /*
-         * Переопределяем фон body для галереи —
-         * чёрный фон, как в TikTok
-         */
-        body {
-            background-color: #000;
+        /* ============================================
+           HALLS PAGE — ЗАЛЫ ПО СТУДИЯМ
+           ============================================ */
+
+        .halls-page {
+            padding-top: var(--header-height);
+            min-height: 100vh;
         }
 
-        /*
-         * Скрываем скроллбар полностью на этой странице
-         */
-        body::-webkit-scrollbar {
+        /* --- Hero --- */
+        .halls-hero {
+            padding: 60px 0 48px;
+            background: var(--gradient-hero);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .halls-hero::before {
+            content: '🎞️';
+            position: absolute;
+            font-size: 20rem;
+            opacity: 0.03;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .halls-hero h1 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 12px;
+        }
+
+        .halls-hero p {
+            color: var(--color-text-secondary);
+            font-size: 1.05rem;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* --- Tabs --- */
+        .tabs-section {
+            padding: 48px 0 80px;
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 48px;
+        }
+
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 100px;
+            background: var(--color-bg-card);
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            border-color: rgba(245, 197, 24, 0.4);
+            color: var(--color-text-primary);
+            background: var(--color-bg-card-hover);
+        }
+
+        .tab-btn.tab-btn--active {
+            border-color: var(--color-accent-yellow);
+            color: var(--color-accent-yellow);
+            background: rgba(245, 197, 24, 0.08);
+            box-shadow: 0 0 20px rgba(245, 197, 24, 0.15);
+        }
+
+        .tab-btn__emoji {
+            font-size: 1.25rem;
+        }
+
+        /* --- Tab panel --- */
+        .tab-panel {
             display: none;
         }
 
-        body {
-            scrollbar-width: none;
-            -ms-overflow-style: none;
+        .tab-panel.tab-panel--active {
+            display: block;
+            animation: fadeInUp 0.4s ease;
         }
 
-        /*
-         * Полноэкранное фото при клике
-         */
-        .gallery-fullscreen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 2000;
-            background: rgba(0, 0, 0, 0.95);
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Studio header --- */
+        .studio-header {
+            background: var(--gradient-card);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--border-radius-lg);
+            padding: 40px 48px;
+            margin-bottom: 40px;
             display: flex;
-            justify-content: center;
             align-items: center;
+            gap: 32px;
+        }
+
+        .studio-header__icon {
+            font-size: 4rem;
+            flex-shrink: 0;
+        }
+
+        .studio-header__content h2 {
+            font-size: clamp(1.4rem, 3vw, 1.9rem);
+            margin-bottom: 12px;
+        }
+
+        .studio-header__content p {
+            color: var(--color-text-secondary);
+            line-height: 1.7;
+            font-size: 0.975rem;
+        }
+
+        /* --- Exhibits grid --- */
+        .exhibits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+
+        .exhibit-card {
+            background: var(--gradient-card);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            transition: transform var(--transition-spring), box-shadow var(--transition-normal), border-color var(--transition-normal);
+        }
+
+        .exhibit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: rgba(245, 197, 24, 0.2);
+        }
+
+        .exhibit-card__image-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/10;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .exhibit-card__image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .exhibit-card:hover .exhibit-card__image-wrap img {
+            transform: scale(1.05);
+        }
+
+        .exhibit-card__year {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(245, 197, 24, 0.3);
+            color: var(--color-accent-yellow);
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 100px;
+            letter-spacing: 0.05em;
+        }
+
+        .exhibit-card__body {
+            padding: 28px;
+        }
+
+        .exhibit-card__title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--color-text-primary);
+        }
+
+        .exhibit-card__director {
+            font-size: 0.85rem;
+            color: var(--color-accent-yellow);
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .exhibit-card__description {
+            font-size: 0.925rem;
+            color: var(--color-text-secondary);
+            line-height: 1.75;
+        }
+
+        .exhibit-card__tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            background: rgba(255,255,255,0.05);
+            padding: 5px 14px;
+            border-radius: 100px;
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+
+        /* Fullscreen overlay */
+        .img-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(0,0,0,0.92);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
             cursor: zoom-out;
         }
 
-        .gallery-fullscreen--open {
+        .img-overlay.img-overlay--open {
             opacity: 1;
             visibility: visible;
         }
 
-        .gallery-fullscreen__img {
-            max-width: 95vw;
-            max-height: 95vh;
+        .img-overlay img {
+            max-width: 92vw;
+            max-height: 88vh;
             object-fit: contain;
-            border-radius: 8px;
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            border-radius: var(--border-radius-md);
+            transform: scale(0.92);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .gallery-fullscreen--open .gallery-fullscreen__img {
+        .img-overlay.img-overlay--open img {
             transform: scale(1);
         }
 
-        .gallery-fullscreen__close {
+        .img-overlay__close {
             position: absolute;
             top: 20px;
             right: 20px;
             width: 44px;
             height: 44px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: white;
-            font-size: 1.4rem;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: #fff;
+            font-size: 1.3rem;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
             cursor: pointer;
-            transition: background 0.2s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            z-index: 2001;
+            transition: background 0.2s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .gallery-fullscreen__close:hover {
-            background: rgba(255, 255, 255, 0.2);
+        .img-overlay__close:hover {
+            background: rgba(255,255,255,0.2);
             transform: scale(1.1) rotate(90deg);
         }
 
-        /*
-         * Навигационные подсказки по бокам
-         */
-        .gallery-nav-hint {
-            position: absolute;
-            left: 16px;
-            bottom: 120px;
-            z-index: 10;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            opacity: 0.6;
-            pointer-events: none;
-        }
-
-        .gallery-nav-hint__item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.5);
-            letter-spacing: 0.03em;
-        }
-
-        .gallery-nav-hint__key {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            min-width: 28px;
-            height: 24px;
-            padding: 0 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 4px;
-            font-size: 0.7rem;
-            font-family: var(--font-mono);
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        @media (max-width: 768px) {
-            .gallery-nav-hint {
-                display: none;
+        /* Responsive */
+        @media (max-width: 900px) {
+            .studio-header {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 32px;
+                gap: 20px;
             }
 
-            .gallery-fullscreen__close {
-                top: 12px;
-                right: 12px;
-                width: 40px;
-                height: 40px;
+            .exhibits-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
             }
         }
 
-        @media (max-width: 480px) {
-            .gallery-sidebar {
-                gap: 14px;
+        @media (max-width: 600px) {
+            .tabs-nav {
+                gap: 8px;
+            }
+
+            .tab-btn {
+                padding: 11px 18px;
+                font-size: 0.85rem;
+            }
+
+            .studio-header {
+                padding: 24px 20px;
+            }
+
+            .exhibit-card__body {
+                padding: 20px;
             }
         }
     </style>
@@ -159,14 +333,10 @@
      ============================================ -->
 <header class="header" role="banner">
     <div class="header__inner">
-
-        <!-- Логотип -->
-        <a href="index.html" class="header__logo" aria-label="Музей бибизян — на главную">
-            <span class="header__logo-emoji" aria-hidden="true">🐵</span>
-            <span class="header__logo-text">Бибизяны</span>
+        <a href="index.html" class="header__logo" aria-label="МузМульт — на главную">
+            <span class="header__logo-emoji" aria-hidden="true">🎞️</span>
+            <span class="header__logo-text">МузМульт</span>
         </a>
-
-        <!-- Десктоп навигация -->
         <nav class="nav" role="navigation" aria-label="Основная навигация">
             <ul class="nav__list">
                 <li>
@@ -177,20 +347,18 @@
                 </li>
                 <li>
                     <a href="gallery.html" class="nav__link nav__link--active">
-                        <span class="nav__link-emoji" aria-hidden="true">😂</span>
-                        Смешные картинки
+                        <span class="nav__link-emoji" aria-hidden="true">🎬</span>
+                        Залы по студиям
                     </a>
                 </li>
                 <li>
                     <a href="about.html" class="nav__link">
                         <span class="nav__link-emoji" aria-hidden="true">📖</span>
-                        О проекте
+                        О музее
                     </a>
                 </li>
             </ul>
         </nav>
-
-        <!-- Бургер кнопка (мобильная) -->
         <button class="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobile-nav">
             <span class="burger__line"></span>
             <span class="burger__line"></span>
@@ -211,14 +379,14 @@
             </li>
             <li>
                 <a href="gallery.html" class="mobile-nav__link mobile-nav__link--active">
-                    <span class="mobile-nav__link-emoji" aria-hidden="true">😂</span>
-                    Смешные картинки
+                    <span class="mobile-nav__link-emoji" aria-hidden="true">🎬</span>
+                    Залы по студиям
                 </a>
             </li>
             <li>
                 <a href="about.html" class="mobile-nav__link">
                     <span class="mobile-nav__link-emoji" aria-hidden="true">📖</span>
-                    О проекте
+                    О музее
                 </a>
             </li>
         </ul>
@@ -226,188 +394,389 @@
 </div>
 
 <!-- ============================================
-     GALLERY — TIKTOK STYLE
+     MAIN CONTENT
      ============================================ -->
-<main class="gallery-page" role="main" aria-label="Галерея мемов">
+<main class="halls-page" role="main">
 
-    <!-- Прогресс-точки сверху -->
-    <div class="gallery-progress" role="tablist" aria-label="Прогресс просмотра">
-        <!-- Создаются динамически через JS -->
-    </div>
-
-    <!-- Лента мемов (scroll-snap контейнер) -->
-    <div class="gallery-feed" role="feed" aria-label="Лента мемов с обезьянами">
-        <!-- Элементы создаются динамически через JS -->
-    </div>
-
-    <!-- Подсказка скролла -->
-    <div class="gallery-hint" aria-hidden="true">
-        <span class="gallery-hint__icon">👆</span>
-        <span class="gallery-hint__text">Листай вверх</span>
-    </div>
-
-    <!-- Боковая панель действий (как в TikTok) -->
-    <div class="gallery-sidebar" aria-label="Действия">
-
-        <!-- Лайк -->
-        <button class="gallery-sidebar__btn" data-action="like" aria-label="Нравится">
-            <span class="gallery-sidebar__icon">🤍</span>
-            <span class="gallery-sidebar__label">Нравится</span>
-        </button>
-
-        <!-- Поделиться -->
-        <button class="gallery-sidebar__btn" data-action="share" aria-label="Поделиться">
-            <span class="gallery-sidebar__icon">📤</span>
-            <span class="gallery-sidebar__label">Поделиться</span>
-        </button>
-
-        <!-- Счётчик -->
-        <div class="gallery-sidebar__btn" aria-label="Номер мема">
-            <span class="gallery-sidebar__icon gallery-sidebar__counter">1/0</span>
-            <span class="gallery-sidebar__label">Номер</span>
+    <!-- Hero -->
+    <section class="halls-hero" aria-labelledby="halls-heading">
+        <div class="container" style="position:relative;z-index:1;">
+            <h1 id="halls-heading">
+                <span class="text-gradient">Залы по студиям</span>
+                <span aria-hidden="true"> 🎬</span>
+            </h1>
+            <p>Выберите студию и исследуйте её экспонаты. Каждый зал — отдельная страница истории советской анимации.</p>
         </div>
+    </section>
 
-        <!-- Полный экран -->
-        <button class="gallery-sidebar__btn" data-action="fullscreen" aria-label="На весь экран">
-            <span class="gallery-sidebar__icon">🔍</span>
-            <span class="gallery-sidebar__label">Увеличить</span>
-        </button>
-    </div>
+    <!-- Tabs -->
+    <section class="tabs-section">
+        <div class="container">
 
-    <!-- Подсказки клавиатурной навигации (десктоп) -->
-    <div class="gallery-nav-hint" aria-hidden="true">
-        <div class="gallery-nav-hint__item">
-            <span class="gallery-nav-hint__key">↑</span>
-            <span>Предыдущий</span>
+            <!-- Tab buttons -->
+            <div class="tabs-nav" role="tablist" aria-label="Залы по студиям">
+                <button class="tab-btn tab-btn--active"
+                        role="tab" aria-selected="true"
+                        aria-controls="panel-kievnauchfilm"
+                        id="tab-kievnauchfilm"
+                        data-tab="kievnauchfilm">
+                    <span class="tab-btn__emoji" aria-hidden="true">🎬</span>
+                    Киевнаучфильм
+                </button>
+                <button class="tab-btn"
+                        role="tab" aria-selected="false"
+                        aria-controls="panel-soyuzmultfilm"
+                        id="tab-soyuzmultfilm"
+                        data-tab="soyuzmultfilm">
+                    <span class="tab-btn__emoji" aria-hidden="true">🎞️</span>
+                    Союзмультфильм
+                </button>
+                <button class="tab-btn"
+                        role="tab" aria-selected="false"
+                        aria-controls="panel-ekran"
+                        id="tab-ekran"
+                        data-tab="ekran">
+                    <span class="tab-btn__emoji" aria-hidden="true">📽️</span>
+                    ТО «Экран»
+                </button>
+            </div>
+
+            <!-- ===== PANEL 1: Киевнаучфильм ===== -->
+            <div class="tab-panel tab-panel--active"
+                 id="panel-kievnauchfilm"
+                 role="tabpanel"
+                 aria-labelledby="tab-kievnauchfilm">
+
+                <div class="studio-header">
+                    <div class="studio-header__icon" aria-hidden="true">🎬</div>
+                    <div class="studio-header__content">
+                        <h2><span class="text-gradient">Киевнаучфильм</span></h2>
+                        <p>
+                            Киевская студия научно-популярных фильмов — одна из крупнейших анимационных студий СССР,
+                            основанная в 1941 году. Студия создала множество шедевров детской анимации,
+                            отличающихся яркими образами, запоминающейся музыкой и глубоким гуманистическим содержанием.
+                            Особую известность получили работы режиссёра Давида Черкасского —
+                            мастера яркого, чуть гротескного, всегда доброго кино.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="exhibits-grid">
+                    <!-- Айболит -->
+                    <article class="exhibit-card">
+                        <div class="exhibit-card__image-wrap">
+                            <img src="memes/4.png"
+                                 alt="Кадр из мультфильма Айболит (1984)"
+                                 loading="lazy">
+                            <span class="exhibit-card__year">1984</span>
+                        </div>
+                        <div class="exhibit-card__body">
+                            <h3 class="exhibit-card__title">Айболит</h3>
+                            <div class="exhibit-card__director">
+                                <span aria-hidden="true">🎥</span>
+                                Режиссёр: Давид Черкасский
+                            </div>
+                            <p class="exhibit-card__description">
+                                Музыкальный анимационный фильм по мотивам произведений Корнея Чуковского.
+                                Добрый доктор Айболит отправляется в далёкую Африку, чтобы вылечить больных зверей.
+                                История о самопожертвовании, доброте и настоящей дружбе, ставшая любимой
+                                для нескольких поколений детей. Яркий визуальный стиль и блестящая музыка
+                                делают этот мультфильм настоящим праздником для зрителя.
+                            </p>
+                            <span class="exhibit-card__tag">
+                                <span aria-hidden="true">🎞️</span> Киевнаучфильм · 1984
+                            </span>
+                        </div>
+                    </article>
+
+                    <!-- Врунгель -->
+                    <article class="exhibit-card">
+                        <div class="exhibit-card__image-wrap">
+                            <img src="memes/5.jpg"
+                                 alt="Кадр из мультфильма Приключения капитана Врунгеля (1976)"
+                                 loading="lazy">
+                            <span class="exhibit-card__year">1976–1977</span>
+                        </div>
+                        <div class="exhibit-card__body">
+                            <h3 class="exhibit-card__title">Приключения капитана Врунгеля</h3>
+                            <div class="exhibit-card__director">
+                                <span aria-hidden="true">🎥</span>
+                                Режиссёр: Давид Черкасский
+                            </div>
+                            <p class="exhibit-card__description">
+                                Сериал по одноимённой книге Андрея Некрасова о незадачливом, но
+                                неунывающем капитане Христофоре Бонифатьевиче Врунгеле и его
+                                невероятных морских приключениях. Юмор, незабываемая музыка и
+                                обаятельные персонажи сделали этот мультфильм культовым произведением.
+                                «Как вы яхту назовёте — так она и поплывёт!»
+                            </p>
+                            <span class="exhibit-card__tag">
+                                <span aria-hidden="true">🎞️</span> Киевнаучфильм · 1976–1977
+                            </span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- ===== PANEL 2: Союзмультфильм ===== -->
+            <div class="tab-panel"
+                 id="panel-soyuzmultfilm"
+                 role="tabpanel"
+                 aria-labelledby="tab-soyuzmultfilm">
+
+                <div class="studio-header">
+                    <div class="studio-header__icon" aria-hidden="true">🎞️</div>
+                    <div class="studio-header__content">
+                        <h2><span class="text-gradient">Союзмультфильм</span></h2>
+                        <p>
+                            Крупнейшая анимационная студия СССР, основанная в 1936 году в Москве.
+                            «Союзмультфильм» — легенда мировой анимации, создавшая более 1500 мультфильмов,
+                            многие из которых стали классикой. Студия воспитала плеяду выдающихся
+                            художников-аниматоров и подарила миру персонажей, известных в десятках стран.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="exhibits-grid">
+                    <!-- Ну, погоди! -->
+                    <article class="exhibit-card">
+                        <div class="exhibit-card__image-wrap">
+                            <img src="memes/6.jpg"
+                                 alt="Кадр из мультфильма Ну, погоди! (1969)"
+                                 loading="lazy">
+                            <span class="exhibit-card__year">1969–2006</span>
+                        </div>
+                        <div class="exhibit-card__body">
+                            <h3 class="exhibit-card__title">Ну, погоди!</h3>
+                            <div class="exhibit-card__director">
+                                <span aria-hidden="true">🎥</span>
+                                Режиссёр: Вячеслав Котёночкин
+                            </div>
+                            <p class="exhibit-card__description">
+                                Культовый советский мультипликационный сериал о вечном противостоянии
+                                Волка и Зайца — советский ответ на «Тома и Джерри». Более 20 выпусков
+                                сделали этих персонажей настоящими символами советской анимации.
+                                Мультфильм полон остроумной иронии, музыкальных пародий и актуальных
+                                отсылок к культуре своей эпохи. Волк стал одним из самых любимых
+                                «антигероев» в истории мультипликации.
+                            </p>
+                            <span class="exhibit-card__tag">
+                                <span aria-hidden="true">🎞️</span> Союзмультфильм · 1969
+                            </span>
+                        </div>
+                    </article>
+
+                    <!-- Крокодил Гена -->
+                    <article class="exhibit-card">
+                        <div class="exhibit-card__image-wrap">
+                            <img src="memes/8.jpg"
+                                 alt="Кадр из мультфильма Крокодил Гена и друзья (1966)"
+                                 loading="lazy">
+                            <span class="exhibit-card__year">1966–1983</span>
+                        </div>
+                        <div class="exhibit-card__body">
+                            <h3 class="exhibit-card__title">Крокодил Гена и друзья</h3>
+                            <div class="exhibit-card__director">
+                                <span aria-hidden="true">🎥</span>
+                                Режиссёр: Роман Качанов
+                            </div>
+                            <p class="exhibit-card__description">
+                                Серия мультфильмов по книгам Эдуарда Успенского о крокодиле Гене
+                                и его лучшем друге Чебурашке — существе с большими ушами и добрым
+                                сердцем. История о дружбе, одиночестве и поиске своего места в мире.
+                                Чебурашка стал одним из самых узнаваемых персонажей мировой анимации
+                                и настоящим символом советской культуры за рубежом.
+                            </p>
+                            <span class="exhibit-card__tag">
+                                <span aria-hidden="true">🎞️</span> Союзмультфильм · 1966
+                            </span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <!-- ===== PANEL 3: ТО «Экран» ===== -->
+            <div class="tab-panel"
+                 id="panel-ekran"
+                 role="tabpanel"
+                 aria-labelledby="tab-ekran">
+
+                <div class="studio-header">
+                    <div class="studio-header__icon" aria-hidden="true">📽️</div>
+                    <div class="studio-header__content">
+                        <h2><span class="text-gradient">Творческое объединение «Экран»</span></h2>
+                        <p>
+                            Телевизионное творческое объединение «Экран» — студия, специализировавшаяся
+                            на создании анимации для советского телевидения. Основанная в 1966 году,
+                            студия подарила зрителям множество трогательных и поэтичных мультфильмов
+                            с особой лирической атмосферой, которая отличает работы «Экрана»
+                            от других советских студий.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="exhibits-grid">
+                    <!-- Мама для мамонтёнка -->
+                    <article class="exhibit-card">
+                        <div class="exhibit-card__image-wrap">
+                            <img src="memes/9.jpg"
+                                 alt="Кадр из мультфильма Мама для мамонтёнка (1981)"
+                                 loading="lazy">
+                            <span class="exhibit-card__year">1981</span>
+                        </div>
+                        <div class="exhibit-card__body">
+                            <h3 class="exhibit-card__title">Мама для мамонтёнка</h3>
+                            <div class="exhibit-card__director">
+                                <span aria-hidden="true">🎥</span>
+                                Режиссёр: Олег Чуркин
+                            </div>
+                            <p class="exhibit-card__description">
+                                Трогательный мультфильм о маленьком мамонтёнке, который тает из
+                                вечной мерзлоты и отправляется на поиски своей мамы. Пронзительная
+                                история о любви, тоске и надежде стала одним из самых любимых
+                                произведений советской анимации. Песня мамонтёнка «Ледяная гора»
+                                до сих пор остаётся в сердце каждого, кто её слышал.
+                            </p>
+                            <span class="exhibit-card__tag">
+                                <span aria-hidden="true">🎞️</span> ТО «Экран» · 1981
+                            </span>
+                        </div>
+                    </article>
+
+                    <!-- Крошка Енот -->
+                    <article class="exhibit-card">
+                        <div class="exhibit-card__image-wrap">
+                            <img src="memes/10.jpg"
+                                 alt="Кадр из мультфильма Крошка Енот (1974)"
+                                 loading="lazy">
+                            <span class="exhibit-card__year">1974</span>
+                        </div>
+                        <div class="exhibit-card__body">
+                            <h3 class="exhibit-card__title">Крошка Енот</h3>
+                            <div class="exhibit-card__director">
+                                <span aria-hidden="true">🎥</span>
+                                Режиссёр: Олег Чуркин
+                            </div>
+                            <p class="exhibit-card__description">
+                                Добрый мультфильм по мотивам американской книги Лилиан Муур о
+                                маленьком енотике, который боялся кого-то у пруда, пока мама
+                                не научила его улыбаться. История о том, что доброта и улыбка
+                                всегда возвращаются к тому, кто их дарит. Знаменитая песня
+                                «От улыбки хмурый день светлей» давно стала народной.
+                            </p>
+                            <span class="exhibit-card__tag">
+                                <span aria-hidden="true">🎞️</span> ТО «Экран» · 1974
+                            </span>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
         </div>
-        <div class="gallery-nav-hint__item">
-            <span class="gallery-nav-hint__key">↓</span>
-            <span>Следующий</span>
-        </div>
-        <div class="gallery-nav-hint__item">
-            <span class="gallery-nav-hint__key">L</span>
-            <span>Лайк</span>
-        </div>
-    </div>
+    </section>
+
 </main>
 
-<!-- Полноэкранный просмотр -->
-<div class="gallery-fullscreen" id="gallery-fullscreen" aria-hidden="true" role="dialog" aria-label="Полноэкранный просмотр">
-    <button class="gallery-fullscreen__close" aria-label="Закрыть">✕</button>
-    <img class="gallery-fullscreen__img" src="" alt="Мем в полном размере">
+<!-- Fullscreen overlay -->
+<div class="img-overlay" id="img-overlay" aria-hidden="true" role="dialog" aria-label="Просмотр изображения">
+    <button class="img-overlay__close" aria-label="Закрыть">✕</button>
+    <img src="" alt="">
 </div>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer class="footer" role="contentinfo">
+    <div class="container">
+        <p class="footer__text">
+            <span aria-hidden="true">🎞️</span>
+            МузМульт © 2024 — Музей мультфильмов СССР. Сделано с
+            <span class="footer__heart" aria-label="любовью">❤️</span>
+            к советской анимации
+        </p>
+        <p class="footer__text mt-1">
+            Проект <a href="about.html" class="footer__link">Максимовой Даши</a>
+            · <a href="https://t.me/museum_cartoon" class="footer__link" target="_blank" rel="noopener">@museum_cartoon</a>
+        </p>
+    </div>
+</footer>
 
 <!-- ============================================
      SCRIPTS
      ============================================ -->
 <script src="js/images.js"></script>
 <script src="js/common.js"></script>
-<script src="js/gallery.js"></script>
 
-<!-- Инлайн-скрипт для fullscreen функционала -->
 <script>
-    (function () {
-        'use strict';
+(function() {
+    'use strict';
 
-        var fullscreenOverlay = document.getElementById('gallery-fullscreen');
-        var fullscreenImg = fullscreenOverlay ? fullscreenOverlay.querySelector('.gallery-fullscreen__img') : null;
-        var fullscreenClose = fullscreenOverlay ? fullscreenOverlay.querySelector('.gallery-fullscreen__close') : null;
-        var feed = document.querySelector('.gallery-feed');
-        var sidebar = document.querySelector('.gallery-sidebar');
-        var fullscreenBtn = sidebar ? sidebar.querySelector('[data-action="fullscreen"]') : null;
+    /* --- Tabs --- */
+    var tabBtns = document.querySelectorAll('.tab-btn');
+    var tabPanels = document.querySelectorAll('.tab-panel');
 
-        /**
-         * Открывает полноэкранный просмотр текущего мема
-         */
-        function openFullscreen() {
-            if (!fullscreenOverlay || !fullscreenImg || !feed) return;
-
-            // Находим текущий видимый элемент
-            var items = feed.querySelectorAll('.gallery-item');
-            if (items.length === 0) return;
-
-            var feedRect = feed.getBoundingClientRect();
-            var centerY = feedRect.top + feedRect.height / 2;
-            var closest = null;
-            var closestDist = Infinity;
-
-            items.forEach(function (item) {
-                var rect = item.getBoundingClientRect();
-                var itemCenter = rect.top + rect.height / 2;
-                var dist = Math.abs(itemCenter - centerY);
-                if (dist < closestDist) {
-                    closestDist = dist;
-                    closest = item;
-                }
-            });
-
-            if (!closest) return;
-
-            var imgSrc = closest.dataset.imagePath;
-            if (!imgSrc) return;
-
-            fullscreenImg.src = imgSrc;
-            fullscreenImg.alt = closest.querySelector('img').alt || 'Мем';
-
-            fullscreenOverlay.classList.add('gallery-fullscreen--open');
-            fullscreenOverlay.setAttribute('aria-hidden', 'false');
-            document.body.classList.add('no-scroll');
-        }
-
-        /**
-         * Закрывает полноэкранный просмотр
-         */
-        function closeFullscreen() {
-            if (!fullscreenOverlay) return;
-
-            fullscreenOverlay.classList.remove('gallery-fullscreen--open');
-            fullscreenOverlay.setAttribute('aria-hidden', 'true');
-            document.body.classList.remove('no-scroll');
-        }
-
-        // Кнопка "Увеличить" в сайдбаре
-        if (fullscreenBtn) {
-            fullscreenBtn.addEventListener('click', function (e) {
-                e.stopPropagation();
-                openFullscreen();
-            });
-        }
-
-        // Кнопка закрытия
-        if (fullscreenClose) {
-            fullscreenClose.addEventListener('click', function (e) {
-                e.stopPropagation();
-                closeFullscreen();
-            });
-        }
-
-        // Клик по оверлею — закрыть
-        if (fullscreenOverlay) {
-            fullscreenOverlay.addEventListener('click', function (e) {
-                if (e.target === fullscreenOverlay) {
-                    closeFullscreen();
-                }
-            });
-        }
-
-        // Escape — закрыть
-        document.addEventListener('keydown', function (e) {
-            if (e.key === 'Escape' && fullscreenOverlay && fullscreenOverlay.classList.contains('gallery-fullscreen--open')) {
-                closeFullscreen();
-            }
+    function activateTab(targetId) {
+        tabBtns.forEach(function(btn) {
+            var active = btn.dataset.tab === targetId;
+            btn.classList.toggle('tab-btn--active', active);
+            btn.setAttribute('aria-selected', active ? 'true' : 'false');
         });
+        tabPanels.forEach(function(panel) {
+            var active = panel.id === 'panel-' + targetId;
+            panel.classList.toggle('tab-panel--active', active);
+        });
+    }
 
-        // Открытие по клику на изображение в ленте
-        if (feed) {
-            feed.addEventListener('click', function (e) {
-                var img = e.target.closest('.gallery-item__image');
-                if (img) {
-                    openFullscreen();
-                }
-            });
-        }
+    tabBtns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            activateTab(btn.dataset.tab);
+        });
+    });
 
-    })();
+    // Поддержка URL-параметра ?studio=...
+    var params = new URLSearchParams(window.location.search);
+    var studioParam = params.get('studio');
+    if (studioParam) {
+        activateTab(studioParam);
+    }
+
+    /* --- Fullscreen on image click --- */
+    var overlay = document.getElementById('img-overlay');
+    var overlayImg = overlay ? overlay.querySelector('img') : null;
+    var overlayClose = overlay ? overlay.querySelector('.img-overlay__close') : null;
+
+    document.querySelectorAll('.exhibit-card__image-wrap img').forEach(function(img) {
+        img.style.cursor = 'zoom-in';
+        img.addEventListener('click', function() {
+            if (!overlay || !overlayImg) return;
+            overlayImg.src = img.src;
+            overlayImg.alt = img.alt;
+            overlay.classList.add('img-overlay--open');
+            overlay.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    if (overlayClose) {
+        overlayClose.addEventListener('click', closeOverlay);
+    }
+    if (overlay) {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === overlay) closeOverlay();
+        });
+    }
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') closeOverlay();
+    });
+
+    function closeOverlay() {
+        if (!overlay) return;
+        overlay.classList.remove('img-overlay--open');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+
+})();
 </script>
 
 </body>
